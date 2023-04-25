@@ -565,4 +565,18 @@ public class QuarterClassTest {
         arrange(2, 2023);
         assertEquals(temp, quarter);
     }
+
+    @Test
+    public void testParseQuarterSpaceYearFirst() {
+        Quarter temp = Quarter.parseQuarter("2023 Q2");
+        arrange(2, 2023);
+        assertEquals(temp, quarter);
+    }
+
+    @Test
+    public void testParseQuarterSpaceYearLast() {
+        Quarter temp = Quarter.parseQuarter("Q2 2023");
+        arrange(2, 2023);
+        assertEquals(temp, quarter);
+    }
 }
