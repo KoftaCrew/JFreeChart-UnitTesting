@@ -1,17 +1,19 @@
 package org.jfree.data.test;
 
-import static org.junit.Assert.*;
-
 import org.jfree.data.time.Quarter;
 import org.jfree.data.time.Year;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class QuarterClassTest {
     Quarter quarter;
@@ -199,10 +201,8 @@ public class QuarterClassTest {
         arrange(4, new Year(2023));
         assertEquals(quarter.getQuarter(), 4);
     }
-
-    //more Ctor testing //todo implement
     @Test
-    public void testQuarterYearOutofBoundLowDateCtor() {
+    public void testQuarterYearOutofBoundLowDateCtor() { //bug in documentation?
         exceptionRule.expect(IllegalArgumentException.class);
         exceptionRule.expectMessage("Year constructor: year (1899) outside valid range.");
         arrange(Date.from(Instant.parse("1899-01-01T00:00:00Z")));
@@ -241,6 +241,18 @@ public class QuarterClassTest {
         exceptionRule.expect(java.time.format.DateTimeParseException.class);
         exceptionRule.expectMessage("Text '2023-13-01T00:00:00Z' could not be parsed at index 0");
         arrange(Date.from(Instant.parse("2023-13-01T00:00:00Z")));
+    }
+
+    @Test
+    public  void testQuarterQuarterLowLimitDateCtor() {
+        arrange(Date.from(Instant.parse("2023-01-01T00:00:00Z")));
+        assertEquals(quarter.getQuarter(), 1);
+    }
+
+    @Test
+    public  void testQuarterQuarterHighLimitDateCtor() {
+        arrange(Date.from(Instant.parse("2023-12-31T00:00:00Z")));
+        assertEquals(quarter.getQuarter(), 4);
     }
 
     @Test
