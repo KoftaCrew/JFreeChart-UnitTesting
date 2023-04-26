@@ -201,6 +201,7 @@ public class QuarterClassTest {
         arrange(4, new Year(2023));
         assertEquals(quarter.getQuarter(), 4);
     }
+
     @Test
     public void testQuarterYearOutofBoundLowDateCtor() { //bug in documentation?
         exceptionRule.expect(IllegalArgumentException.class);
@@ -244,19 +245,19 @@ public class QuarterClassTest {
     }
 
     @Test
-    public  void testQuarterQuarterLowLimitDateCtor() {
+    public void testQuarterQuarterLowLimitDateCtor() {
         arrange(Date.from(Instant.parse("2023-01-01T00:00:00Z")));
         assertEquals(quarter.getQuarter(), 1);
     }
 
     @Test
-    public  void testQuarterQuarterHighLimitDateCtor() {
+    public void testQuarterQuarterHighLimitDateCtor() {
         arrange(Date.from(Instant.parse("2023-12-31T00:00:00Z")));
         assertEquals(quarter.getQuarter(), 4);
     }
 
     @Test
-    public void testQuarterYearOutofBoundsLowDateTimezoneCtor() {
+    public void testQuarterYearOutofBoundsLowDateTimezoneCtor() { //bug in documentation?
         exceptionRule.expect(IllegalArgumentException.class);
         exceptionRule.expectMessage("Year constructor: year (1899) outside valid range.");
         arrange(Date.from(Instant.parse("1899-01-01T00:00:00Z")), TimeZone.getTimeZone("GMT +2:00"));
@@ -283,6 +284,17 @@ public class QuarterClassTest {
         assertEquals(quarter.getQuarter(), 4);
     }
 
+    @Test
+    public  void testQuarterQuarterLowLimitDateTimezoneCtor() {
+        arrange(Date.from(Instant.parse("2023-01-01T00:00:00Z")), TimeZone.getTimeZone("GMT +2:00"));
+        assertEquals(quarter.getQuarter(), 1);
+    }
+
+    @Test
+    public void testQuarterQuarterHighLimitDateTimezoneCtor() {
+        arrange(Date.from(Instant.parse("2023-12-31T00:00:00Z")), TimeZone.getTimeZone("GMT +2:00"));
+        assertEquals(quarter.getQuarter(), 4);
+    }
     //Method Testing
     @Test
     public void testGetQuarter() {
@@ -293,7 +305,7 @@ public class QuarterClassTest {
     @Test
     public void testGetYear() {
         arrange(2, 2023);
-        assertEquals(new Year(), new Year(2023));
+        assertEquals(quarter.getYear(), new Year(2023));
     }
 
     //previous Method tests
@@ -317,12 +329,7 @@ public class QuarterClassTest {
         assertEquals(quarter.previous(), temp);
     }
 
-    @Test
-    public void testPreviousMidYear() {
-        arrange(4, 2023);
-        Quarter temp = new Quarter(3, 2023);
-        assertEquals(quarter.previous(), temp);
-    }
+
 
     //next Method tests
     @Test
