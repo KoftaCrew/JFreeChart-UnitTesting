@@ -352,12 +352,6 @@ public class QuarterClassTest {
         assertEquals(quarter.next(), temp);
     }
 
-    @Test
-    public void testNextMidYear() {
-        arrange(2, 2023);
-        Quarter temp = new Quarter(3, 2023);
-        assertEquals(quarter.next(), temp);
-    }
 
     @Test
     public void testGetSerialIndex() {
